@@ -42,7 +42,7 @@ $ pdm run src/mmfirstfilterpy/to_process.py 1С.xlsx Все_заявления.x
 1. Установите pip и venv из репозиториев своего дистрибутива.
 Для Ubuntu `python3-pip` и `python3-venv`.
 Для Arch Linux только `python-pip`.
-Для OpenSuse `python-pip` (надеюсь).
+Для OpenSUSE `python3-pip`.
 2. Склонировать репозиторий в нужную директорию и перейти в него
 ```console
 $ git clone https://github.com/WoWaster/MMFirstFilterPy
