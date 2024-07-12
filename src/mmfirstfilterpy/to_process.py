@@ -23,11 +23,11 @@ def process(args):
         oneS,
         epgu_mm_fst,
         how="inner",
-        left_on="UID профиля",
-        right_on="Guid поступающего",
+        left_on="UID заявления",
+        right_on="Guid заявления",
     )
     print(f"Количество строк в 1С с первым приоритетом (с дублями): {len(joined)}")
-
+    print(f"Количество строк в 1С к обработке (надеюсь): {joined["UID заявления"].nunique()}")
     print(f"Количество уникальных абитуриентов: {joined["UID профиля"].nunique()}")
 
     joined.drop(columns=REDUNDANT_COLUMNS, inplace=True)
