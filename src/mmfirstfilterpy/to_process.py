@@ -32,7 +32,7 @@ def process(args):
 
     joined.drop(columns=REDUNDANT_COLUMNS, inplace=True)
 
-    joined.to_excel(args["Обработать.xlsx"], index=False)
+    joined.to_excel(args["Обработать.xlsx"], index=False, freeze_panes=(1, 0))
 
 
 if __name__ == "__main__":
