@@ -13,20 +13,20 @@ def process(args):
     epgu = pd.read_excel(args["ЕГПУ.xlsx"])
     print(f"Количество заявлений в СПбГУ: {len(epgu)}")
 
-    epgu_mm = epgu[epgu["Uid конкурса"].isin(MATH_LISTS)]
-    print(f"Количество заявлений на матмех: {len(epgu_mm)}")
+    epgu_first_priory = epgu.loc[
+        epgu.groupby("Guid заявления")["Приоритет"].idxmin()
+    ].reset_index(drop=True)
 
-    epgu_mm_fst = epgu_mm[epgu_mm["Приоритет"] == 1]
-    print(f"Количество заявлений на матмех первым приоритетом: {len(epgu_mm_fst)}")
+    epgu_mm = epgu_first_priory[epgu_first_priory["Uid конкурса"].isin(MATH_LISTS)]
+    print(f"Количество заявлений на матмех первым приоритетом: {len(epgu_mm)}")
 
     joined = pd.merge(
         oneS,
-        epgu_mm_fst,
+        epgu_mm,
         how="inner",
         left_on="UID заявления",
         right_on="Guid заявления",
     )
-    print(f"Количество строк в 1С с первым приоритетом (с дублями): {len(joined)}")
     print(f"Количество строк в 1С к обработке (надеюсь): {joined["UID заявления"].nunique()}")
     print(f"Количество уникальных абитуриентов: {joined["UID профиля"].nunique()}")
 
