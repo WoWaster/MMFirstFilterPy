@@ -14,11 +14,13 @@ def process(args):
         epgu.groupby("Guid заявления")["Приоритет"].idxmin()
     ].reset_index(drop=True)
 
-    epgu_mm = epgu_first_priory[epgu_first_priory["Uid конкурса"].isin(MATH_LISTS)]
-    print(f"Количество заявлений на матмех: {len(epgu_mm)}")
+    # epgu_mm = epgu_first_priory[epgu_first_priory["Uid конкурса"].isin(MATH_LISTS)]
+    # print(f"Количество заявлений на матмех: {len(epgu_mm)}")
 
     # epgu_mm = epgu_mm[epgu_mm["Приоритет"] != 1]
-    epgu_mm.to_excel(args["Матмеховские.xlsx"], index=False, freeze_panes=(1, 0))
+    epgu_first_priory.to_excel(
+        args["Матмеховские.xlsx"], index=False, freeze_panes=(1, 0)
+    )
 
 
 if __name__ == "__main__":
