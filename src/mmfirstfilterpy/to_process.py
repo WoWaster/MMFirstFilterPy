@@ -18,21 +18,23 @@ def process(args):
     epgu_actual = epgu
 
     epgu_first_priory = epgu_actual.loc[
-        epgu_actual.groupby("Guid заявления")["Приоритет"].idxmin()
+        epgu_actual.groupby("Id заявления")["Приоритет"].idxmin()
     ].reset_index(drop=True)
 
-    epgu_mm = epgu_first_priory[epgu_first_priory["Uid конкурса"].isin(MATH_LISTS)]
+    epgu_mm = epgu_first_priory[epgu_first_priory["Id конкурса"].isin(MATH_LISTS)]
     print(f"Количество заявлений на матмех первым приоритетом: {len(epgu_mm)}")
 
     joined = pd.merge(
         oneS,
         epgu_mm,
         how="inner",
-        left_on="UID заявления",
-        right_on="Guid заявления",
+        left_on="Id заявления",
+        right_on="Id заявления",
     )
-    print(f"Количество строк в 1С к обработке (надеюсь): {joined["UID заявления"].nunique()}")
-    print(f"Количество уникальных абитуриентов: {joined["UID профиля"].nunique()}")
+    print(
+        f"Количество строк в 1С к обработке (надеюсь): {joined['Id заявления'].nunique()}"
+    )
+    print(f"Количество уникальных абитуриентов: {joined['Id профиля'].nunique()}")
 
     joined.drop(columns=REDUNDANT_COLUMNS, inplace=True)
 
