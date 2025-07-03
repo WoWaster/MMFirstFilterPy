@@ -1,7 +1,7 @@
 import pandas as pd
 import argparse
 
-from constants import MATH_LISTS, REDUNDANT_COLUMNS
+from constants import MATH_LISTS, REDUNDANT_COLUMNS, СОПОСТАВЛЕНИЕ_ID_КГ_ОП
 
 
 def process(args):
@@ -30,6 +30,9 @@ def process(args):
         how="inner",
         left_on="Id заявления",
         right_on="Id заявления",
+    )
+    joined["Обр.программа"] = joined.apply(
+        lambda row: СОПОСТАВЛЕНИЕ_ID_КГ_ОП[row["Id конкурса"]], axis=1
     )
     print(
         f"Количество строк в 1С к обработке (надеюсь): {joined['Id заявления'].nunique()}"
